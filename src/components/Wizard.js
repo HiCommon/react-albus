@@ -12,10 +12,10 @@
  * the License.
  */
 
-import { Component } from 'react';
-import PropTypes from 'prop-types';
-import { createMemoryHistory } from 'history';
-import renderCallback from '../utils/renderCallback';
+import { Component } from "react";
+import PropTypes from "prop-types";
+import { createMemoryHistory } from "history";
+import renderCallback from "../utils/renderCallback";
 
 class Wizard extends Component {
   state = {
@@ -31,6 +31,7 @@ class Wizard extends Component {
         go: this.history.go,
         history: this.history,
         init: this.init,
+        setSteps: this.setSteps,
         next: this.next,
         previous: this.history.goBack,
         push: this.push,
@@ -60,11 +61,11 @@ class Wizard extends Component {
   }
 
   get historySuffix() {
-    return this.props.preserveSearch ? this.history.location.search : '';
+    return this.props.preserveSearch ? this.history.location.search : "";
   }
 
   get ids() {
-    return this.state.steps.map(s => s.id);
+    return this.state.steps.map((s) => s.id);
   }
 
   get nextStep() {
@@ -74,21 +75,27 @@ class Wizard extends Component {
   history = this.props.history || createMemoryHistory();
   steps = [];
 
-  pathToStep = pathname => {
-    const id = pathname.replace(this.basename, '');
-    const [step] = this.state.steps.filter(s => s.id === id);
+  pathToStep = (pathname) => {
+    const id = pathname.replace(this.basename, "");
+    const [step] = this.state.steps.filter((s) => s.id === id);
     return step || this.state.step;
   };
 
-  init = steps => {
+  init = (steps) => {
     this.setState({ steps }, () => {
       const step = this.pathToStep(this.history.location.pathname);
       if (step.id) {
         this.setState({ step });
       } else {
-        this.history.replace(`${this.basename}${this.ids[0]}${this.historySuffix}`);
+        this.history.replace(
+          `${this.basename}${this.ids[0]}${this.historySuffix}`
+        );
       }
     });
+  };
+
+  setSteps = (steps) => {
+    this.setState({ steps });
   };
 
   push = (step = this.nextStep) =>
@@ -126,7 +133,7 @@ Wizard.propTypes = {
 };
 
 Wizard.defaultProps = {
-  basename: '',
+  basename: "",
   preserveSearch: false,
   history: null,
   onNext: null,
