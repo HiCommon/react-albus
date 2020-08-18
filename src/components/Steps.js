@@ -12,16 +12,34 @@
  * the License.
  */
 
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import log from "../utils/log";
 
 class Steps extends Component {
   componentWillMount() {
-    const steps = React.Children.map(
-      this.props.children,
+    const steps = this.getSteps();
+    this.context.wizard.init(steps);
+  }
+
+  componentDidUpdate(prevProps) {
+    log("Updated steps", {
+      oldSteps: this.getSteps(prevProps.children),
+      newSteps: this.getSteps(),
+    });
+
+    if (this.getSteps(prevProps.children).length !== this.getSteps().length) {
+      this.context.wizard.setSteps(this.getSteps());
+    }
+  }
+
+  getSteps(_children) {
+    const children = _children || this.props.children;
+
+    return React.Children.map(
+      children,
       ({ props: { children, render, ...config } }) => config
     );
-    this.context.wizard.init(steps);
   }
 
   render() {

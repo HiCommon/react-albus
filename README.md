@@ -186,3 +186,9 @@ This project adheres to the [American Express Community Guidelines](https://gith
 By participating, you are expected to honor these guidelines.
 
 [![Analytics](https://ga-beacon.appspot.com/UA-85897603-1/react-albus/README.md?useReferrer)](https://github.com/americanexpress/react-albus)
+
+## Build / editing instructions from Common
+
+From Stefan: Run `nvm install` to get the appropriate version of node, then do an `npm install` (yarn doesn't work).
+
+Make your changes, then run `npm run build` to output them to `lib/`
