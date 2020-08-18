@@ -1,5 +1,4 @@
-const log = () => {
-  const args = [].slice.call(arguments); // using this instead of spread syntax because it was causing errors
+const log = (...args) => {
   console.log(`[React Albus] `, ...args);
 };
 
