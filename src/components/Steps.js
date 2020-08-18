@@ -23,12 +23,11 @@ class Steps extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    log("Updated steps", {
-      oldSteps: this.getSteps(prevProps.children),
-      newSteps: this.getSteps(),
-    });
-
     if (this.getSteps(prevProps.children).length !== this.getSteps().length) {
+      log("Updated steps", {
+        oldSteps: this.getSteps(prevProps.children),
+        newSteps: this.getSteps(),
+      });
       this.context.wizard.setSteps(this.getSteps());
     }
   }
